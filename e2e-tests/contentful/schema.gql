@@ -1,4 +1,4 @@
-### Type definitions saved at 2021-04-29T15:27:17.706Z ###
+### Type definitions saved at 2021-05-05T21:57:27.884Z ###
 
 type File implements Node @dontInfer {
   sourceInstanceName: String!
@@ -71,8 +71,6 @@ type Directory implements Node @dontInfer {
 type Site implements Node @dontInfer {
   buildTime: Date @dateformat
   siteMetadata: SiteSiteMetadata
-  port: Int
-  host: String
   polyfill: Boolean
   pathPrefix: String
 }
@@ -125,7 +123,7 @@ type MarkdownWordCount {
   words: Int
 }
 
-type MarkdownRemark implements Node @childOf(mimeTypes: ["text/markdown", "text/x-markdown"], types: ["ContentfulNodeTypeText"]) @derivedTypes @dontInfer {
+type MarkdownRemark implements Node @childOf(mimeTypes: ["text/markdown", "text/x-markdown"], types: ["ContentfulNodeTypeText"]) @dontInfer {
   frontmatter: MarkdownRemarkFrontmatter
   excerpt: String
   rawMarkdownBody: String
@@ -152,7 +150,7 @@ type ContentfulInternalSys {
   locale: String!
 }
 
-type ContentfulContentType implements Node @derivedTypes @dontInfer {
+type ContentfulContentType implements Node @dontInfer {
   name: String!
   displayField: String!
   description: String!
@@ -176,32 +174,36 @@ interface ContentfulEntry implements Node {
 }
 
 type ContentfulAsset implements ContentfulInternalReference & Node @dontInfer {
-  file: ContentfulAssetFile
+  sys: ContentfulInternalSys
   title: String
   description: String
-  sys: ContentfulInternalSys
-}
-
-type ContentfulAssetFile {
-  url: String
-  details: ContentfulAssetFileDetails
-  fileName: String
   contentType: String
-}
-
-type ContentfulAssetFileDetails {
+  fileName: String
+  url: String
   size: Int
-  image: ContentfulAssetFileDetailsImage
-}
-
-type ContentfulAssetFileDetailsImage {
   width: Int
   height: Int
 }
 
+type ContentfulNodeTypeRichTextAssets {
+  block: [ContentfulAsset]!
+  hyperlink: [ContentfulAsset]!
+}
+
+type ContentfulNodeTypeRichTextEntries {
+  inline: [ContentfulEntry]!
+  block: [ContentfulEntry]!
+  hyperlink: [ContentfulEntry]!
+}
+
+type ContentfulNodeTypeRichTextLinks {
+  assets: ContentfulNodeTypeRichTextAssets
+  entries: ContentfulNodeTypeRichTextEntries
+}
+
 type ContentfulNodeTypeRichText @dontInfer {
-  raw: JSON
-  references: [ContentfulInternalReference]
+  json: JSON
+  links: ContentfulNodeTypeRichTextLinks
 }
 
 type ContentfulNodeTypeLocation @dontInfer {
