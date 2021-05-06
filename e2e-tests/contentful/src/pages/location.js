@@ -5,7 +5,7 @@ import slugify from "slugify"
 import Layout from "../components/layout"
 
 const LocationPage = ({ data }) => {
-  const entries = data.allContentfulLocation.nodes
+  const entries = data.allContentfulContentTypeLocation.nodes
   return (
     <Layout>
       {entries.map(({ title, location }) => {
@@ -28,7 +28,7 @@ export default LocationPage
 
 export const pageQuery = graphql`
   query LocationQuery {
-    allContentfulLocation(sort: { fields: sys___id }) {
+    allContentfulContentTypeLocation(sort: { fields: sys___id }) {
       nodes {
         title
         location {

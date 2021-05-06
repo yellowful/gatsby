@@ -5,7 +5,7 @@ import slugify from "slugify"
 import Layout from "../components/layout"
 
 const BooleanPage = ({ data }) => {
-  const entries = data.allContentfulBoolean.nodes
+  const entries = data.allContentfulContentTypeBoolean.nodes
   return (
     <Layout>
       {entries.map(({ title, boolean }) => {
@@ -25,7 +25,7 @@ export default BooleanPage
 
 export const pageQuery = graphql`
   query BooleanQuery {
-    allContentfulBoolean(sort: { fields: sys___id }) {
+    allContentfulContentTypeBoolean(sort: { fields: sys___id }) {
       nodes {
         title
         boolean

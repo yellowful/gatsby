@@ -5,7 +5,7 @@ import slugify from "slugify"
 import Layout from "../components/layout"
 
 const NumberPage = ({ data }) => {
-  const entries = data.allContentfulNumber.nodes
+  const entries = data.allContentfulContentTypeNumber.nodes
   return (
     <Layout>
       {entries.map(({ title, integer, decimal }) => {
@@ -25,7 +25,7 @@ export default NumberPage
 
 export const pageQuery = graphql`
   query NumberQuery {
-    allContentfulNumber(sort: { fields: sys___id }) {
+    allContentfulContentTypeNumber(sort: { fields: sys___id }) {
       nodes {
         title
         integer

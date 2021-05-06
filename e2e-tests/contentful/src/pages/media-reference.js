@@ -6,7 +6,7 @@ import slugify from "slugify"
 import Layout from "../components/layout"
 
 const MediaReferencePage = ({ data }) => {
-  const entries = data.allContentfulMediaReference.nodes
+  const entries = data.allContentfulContentTypeMediaReference.nodes
   return (
     <Layout>
       {entries.map(({ sys: { id }, title, one, many }) => {
@@ -38,7 +38,7 @@ export default MediaReferencePage
 
 export const pageQuery = graphql`
   query MediaReferenceQuery {
-    allContentfulMediaReference(sort: { fields: title }) {
+    allContentfulContentTypeMediaReference(sort: { fields: title }) {
       nodes {
         title
         sys {

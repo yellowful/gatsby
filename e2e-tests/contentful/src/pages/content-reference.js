@@ -17,7 +17,7 @@ function renderReferencedComponent(ref) {
 }
 
 const ContentReferencePage = ({ data }) => {
-  const entries = data.allContentfulContentReference.nodes
+  const entries = data.allContentfulContentTypeContentReference.nodes
   return (
     <Layout>
       {entries.map(({ sys: { id }, title, one, many }) => {
@@ -47,7 +47,7 @@ export default ContentReferencePage
 
 export const pageQuery = graphql`
   query ContentReferenceQuery {
-    allContentfulContentReference(sort: { fields: title }) {
+    allContentfulContentTypeContentReference(sort: { fields: title }) {
       nodes {
         title
         sys {
@@ -58,39 +58,39 @@ export const pageQuery = graphql`
           sys {
             id
           }
-          ... on ContentfulText {
+          ... on ContentfulContentTypeText {
             title
             short
           }
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             integer
           }
-          ... on ContentfulContentReference {
+          ... on ContentfulContentTypeContentReference {
             title
             one {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
             many {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
@@ -101,39 +101,39 @@ export const pageQuery = graphql`
           sys {
             id
           }
-          ... on ContentfulText {
+          ... on ContentfulContentTypeText {
             title
             short
           }
-          ... on ContentfulNumber {
+          ... on ContentfulContentTypeNumber {
             title
             integer
           }
-          ... on ContentfulContentReference {
+          ... on ContentfulContentTypeContentReference {
             title
             one {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
             many {
-              ... on ContentfulText {
+              ... on ContentfulContentTypeText {
                 title
                 short
               }
-              ... on ContentfulNumber {
+              ... on ContentfulContentTypeNumber {
                 title
                 integer
               }
-              ... on ContentfulContentReference {
+              ... on ContentfulContentTypeContentReference {
                 title
               }
             }
