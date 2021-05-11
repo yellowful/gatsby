@@ -166,12 +166,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   ]).then(() => {
     navigationInit()
 
-    domReady(() => {
+    function renderApp(renderer, App) {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
       }
 
-      renderer(<Root />, rootElement, () => {
+      renderer(<App />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
 
         // Render query on demand overlay
@@ -191,6 +191,27 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           )
         }
       })
-    })
+    }
+
+    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
+    // TODO remove IE 10 support
+    const doc = document
+    if (
+      doc.readyState === `complete` ||
+      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
+    ) {
+      setTimeout(function () {
+        renderApp(renderer, Root)
+      }, 0)
+    } else {
+      const handler = function () {
+        doc.removeEventListener(`DOMContentLoaded`, handler, false)
+        window.removeEventListener(`load`, handler, false)
+        renderApp(renderer, Root)
+      }
+
+      doc.addEventListener(`DOMContentLoaded`, handler, false)
+      window.addEventListener(`load`, handler, false)
+    }
   })
 })
