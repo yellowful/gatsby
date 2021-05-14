@@ -12,8 +12,11 @@ import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
-import * as WorkerPool from "../utils/worker/pool"
-import JestWorker from "jest-worker"
+import {
+  create as createWorkerPool,
+  IGatsbyWorkerPool,
+} from "../utils/worker/pool"
+// import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
@@ -75,7 +78,7 @@ export async function initialize({
   parentSpan,
 }: IBuildContext): Promise<{
   store: Store<IGatsbyState, AnyAction>
-  workerPool: JestWorker
+  workerPool: IGatsbyWorkerPool
 }> {
   if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
     reporter.info(
@@ -606,7 +609,7 @@ export async function initialize({
     payload: _.flattenDeep([extensions, apiResults]),
   })
 
-  const workerPool = WorkerPool.create()
+  const workerPool = createWorkerPool()
 
   return {
     store,

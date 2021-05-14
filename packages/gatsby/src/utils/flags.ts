@@ -176,6 +176,17 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `BUILD_SCHEMA_IN_DIFF_PROC`,
+    env: `GATSBY_BUILD_SCHEMA_IN_DIFF_PROC`,
+    command: `build`,
+    description: `This is to be able to build schema in other (worker) processes.`,
+    experimental: true,
+    umbrellaIssue: `https://google.com/`,
+    // we kind of need support for WeakRef
+    testFitness: (): fitnessEnum => semver.satisfies(process.version, `>=14.6`),
+    telemetryId: ``,
+  },
 ]
 
 export default activeFlags
